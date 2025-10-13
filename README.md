@@ -1,6 +1,6 @@
 # VLSDA: Vision-Language Model Supervised Domain Adaptation for Cross-Domain Object Detection in Remote Sensing
 
-By .
+By Junhong Lu, Hao Chen.
 
 This repository contains the implementation accompanying our paper VLSDA: Vision-Language Model Supervised Domain Adaptation for Cross-Domain Object Detection in Remote Sensing.
 This work is currently under review by IEEE Transactions on Geoscience and Remote Sensing. Once the paper is formally published, we will update this repository with the final citation.
@@ -98,7 +98,11 @@ Pre-trained models and configuration files will be released soon for public acce
 
 ## Reference
 https://github.com/IDEA-Research/DINO
+
 https://github.com/h751410234/RemoteSensingTeacher
+
 https://github.com/h751410234/DATR
+
 https://github.com/om-ai-lab/RS5M
+
 https://github.com/MitsuiChen14/DGTRS

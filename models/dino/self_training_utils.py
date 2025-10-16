@@ -9,7 +9,33 @@ from torchvision.ops.boxes import batched_nms, box_iou
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import torch
+import torch.distributed as dist
 
+def sync_buffers(model, buffer_names):
+    """
+    同步 DDP 模型的部分 buffer，在单 GPU 训练时不做操作
+    :param model: DDP 模型（或单 GPU 模型）
+    :param buffer_names: 需要同步的 buffer 名称列表（如 ["cls_thr", "prototypes"]）
+    """
+    if not (dist.is_available() and dist.is_initialized()):
+        return  # 单 GPU 训练时不需要同步
+
+    model_module = model.module
+
+    for name in buffer_names:
+        if not hasattr(model_module, name):
+            print(f"Warning: buffer {name} not found in model.module.")
+            continue
+
+        buffer = getattr(model_module, name)
+        if not isinstance(buffer, torch.Tensor):
+            print(f"Warning: buffer {name} is not a tensor, skipping.")
+            continue
+
+        # 同步 buffer
+        with torch.no_grad():
+            dist.all_reduce(buffer, op=dist.ReduceOp.SUM)
+            buffer.div_(dist.get_world_size())
 
 def _make_dir(path):
     if not os.path.exists(path):

@@ -15,8 +15,7 @@ from models.dino.dino import PostProcess
 from models.dino.self_training_utils import *
 from util.utils import to_device
 
-buffer_names = ['global_thr', 'local_thr',
-                'global_proto', 'Amount', 'clip_global_proto', 'clip_Amount']
+buffer_names = ['global_proto', 'Amount', 'clip_global_proto', 'clip_Amount']
 
 
 def train_one_epoch(model: torch.nn.Module, teacher_model: ModelEMA, clip_model: torch.nn.Module,
